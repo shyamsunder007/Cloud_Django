@@ -15,11 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
-from core import views
+from cloud.core import views
+
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
      path('', views.Home.as_view(), name='home'),
- path('upload_book/', views.upload_book, name='upload_book'),
+ path('books/', views.upload_book, name='upload_book'),
       path('book_list/', views.book_list, name='book_list'),
  path('book_list/<int:pk>/', views.delete_book, name='delete_book'),
 
@@ -29,3 +32,7 @@ urlpatterns = [
    	
 
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

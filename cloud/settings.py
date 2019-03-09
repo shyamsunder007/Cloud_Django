@@ -37,12 +37,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+'compress_storage', 
     'crispy_forms',
 
-    'core',
+    'cloud.core',
 ]
 
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -51,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
 
 ROOT_URLCONF = 'cloud.urls'
@@ -128,14 +130,15 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'core/static')
+    os.path.join(BASE_DIR, 'cloud/static')
 ]
-print (BASE_DIR)
+
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 MEDIA_URL = '/media/'
-
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
-AUTHENTICATION_BACKENDS = ('core.backend.EmailOrUsernameModelBackend',)
+AUTHENTICATION_BACKENDS = ('cloud.core.backend.EmailOrUsernameModelBackend',)
+FILE_COMPRESS_DELETE_OLD_FILE = False # to not delete old files after compressed 
+FILE_COMPRESS_QUEUE = 'Celery'
