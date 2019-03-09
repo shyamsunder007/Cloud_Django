@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from django.views.generic import TemplateView, ListView, CreateView
 from .forms import SignUpForm,BookForm
 from django.contrib.auth import login, authenticate
+from .models import Book
 # Create your views here.
 class Home(TemplateView):
     template_name = 'home.html'
@@ -37,3 +38,15 @@ def upload_book(request):
     return render(request, 'upload_book.html', {
         'form': form
     })
+
+def book_list(request):
+    books = Book.objects.filter(user=request.user)
+    return render(request, 'book_list.html', {
+        'books': books
+    })
+    
+def delete_book(request, pk):
+    if request.method == 'POST':
+        book = Book.objects.get(pk=pk)
+        book.delete()
+    return redirect('book_list')

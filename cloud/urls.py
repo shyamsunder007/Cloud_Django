@@ -20,7 +20,9 @@ from core import views
 urlpatterns = [
      path('', views.Home.as_view(), name='home'),
  path('upload_book/', views.upload_book, name='upload_book'),
-   
+      path('book_list/', views.book_list, name='book_list'),
+ path('book_list/<int:pk>/', views.delete_book, name='delete_book'),
+
     path('admin/', admin.site.urls),
      path('signup/', views.signup, name='signup'),
     path('accounts/', include('django.contrib.auth.urls')),
