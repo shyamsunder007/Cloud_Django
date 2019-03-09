@@ -19,7 +19,8 @@ from core import views
 
 urlpatterns = [
      path('', views.Home.as_view(), name='home'),
-
+ path('upload_book/', views.upload_book, name='upload_book'),
+   
     path('admin/', admin.site.urls),
      path('signup/', views.signup, name='signup'),
     path('accounts/', include('django.contrib.auth.urls')),

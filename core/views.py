@@ -1,6 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.views.generic import TemplateView, ListView, CreateView
-from .forms import SignUpForm
+from .forms import SignUpForm,BookForm
 from django.contrib.auth import login, authenticate
 # Create your views here.
 class Home(TemplateView):
@@ -18,5 +18,22 @@ def signup(request):
     else:
         form = SignUpForm()
     return render(request, 'registration/signup.html', {
+        'form': form
+    })
+def upload_book(request):
+    if request.method == 'POST':
+        form = BookForm(request.POST, request.FILES)
+        if form.is_valid():
+            candidate = form.save(commit=False)
+            candidate.user = request.user  # use your own profile here
+            #print (request.FILES)
+            #handle_uploaded_file(request.FILES['pdf'])
+            candidate.save()
+            form.save()
+            return redirect('home')
+    else:
+        form = BookForm()
+
+    return render(request, 'upload_book.html', {
         'form': form
     })
