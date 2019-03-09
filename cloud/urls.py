@@ -26,6 +26,8 @@ urlpatterns = [
       path('book_list/', views.book_list, name='book_list'),
  path('book_list/<int:pk>/', views.delete_book, name='delete_book'),
 
+ path('share_book/<file_key>/', views.share_book, name='share_book'),
+
     path('admin/', admin.site.urls),
      path('signup/', views.signup, name='signup'),
     path('accounts/', include('django.contrib.auth.urls')),

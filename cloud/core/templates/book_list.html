@@ -1,13 +1,25 @@
+
 {% extends 'base.html' %}
 
 {% block content %}
 
   {% block content_header %}
+   <script>
+   
+   def myFunction(filename){
+    console.log("Ada");
+       alert(filename); 
+
+   }
+
+</script>
     <h2>Files Uploaded</h2>
     <p>
       <a href="{% url 'upload_book' %}" class="btn btn-primary">Upload Files</a>
     </p>
   {% endblock %}
+    
+    
 
   <table class="table mb-0">
     <thead>
@@ -15,20 +27,27 @@
         <th>Title</th>
         <th>Author</th>
         <th>Download</th>
+        <th>Share URL</th>
         <th>Delete</th>
       </tr>
     </thead>
     <tbody>
+
       {% for book in books %}
         <tr>
          <td>{{ book.title }}</td>
           <td>{{ book.author }}</td>
           <td>
-            <a href="{{ book.file.url }}" class="btn btn-primary btn-sm" target="_blank">
+            <a href="http://127.0.0.1:8000/media/books/pdfs/{{ book.file }}" class="btn btn-primary btn-sm" target="_blank">
               Download PDF
-            </a>
           </td>
           <td>
+            <a href="#" onclick="return alert('Copy URL: http://127.0.0.1:8000/share_book/{{ book.file }}')" class="btn btn-primary btn-sm" >
+              Download PDF
+          </td>
+          
+          <td>
+
             <form method="post" action="{% url 'delete_book' book.pk %}">
               {% csrf_token %}
               <button type="submit" class="btn btn-danger btn-sm">Delete</button>

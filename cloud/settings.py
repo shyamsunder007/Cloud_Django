@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 'compress_storage', 
     'crispy_forms',
-
     'cloud.core',
 ]
 

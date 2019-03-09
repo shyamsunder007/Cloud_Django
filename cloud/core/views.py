@@ -4,6 +4,7 @@ from .forms import SignUpForm,BookForm
 from django.contrib.auth import login, authenticate
 from .models import Book
 # Create your views here.
+from django.contrib import messages
 class Home(TemplateView):
     template_name = 'home.html'
 
@@ -27,10 +28,12 @@ def upload_book(request):
         if form.is_valid():
             candidate = form.save(commit=False)
             candidate.user = request.user  # use your own profile here
-            #print (request.FILES)
+            print (request.FILES['file'])
             #handle_uploaded_file(request.FILES['pdf'])
+            candidate.name=str("asd")+str(request.FILES['file'])
             candidate.save()
             form.save()
+            print (candidate.name)
             return redirect('home')
     else:
         form = BookForm()
@@ -41,12 +44,21 @@ def upload_book(request):
 
 def book_list(request):
     books = Book.objects.filter(user=request.user)
+    for book in books:
+        x=book.file.url
+        book.file=x.split("/")[-1]
     return render(request, 'book_list.html', {
-        'books': books
+        'books': books,
     })
     
 def delete_book(request, pk):
     if request.method == 'POST':
         book = Book.objects.get(pk=pk)
+
         book.delete()
+
     return redirect('book_list')
+
+
+def share_book(request, file_key):
+    return redirect('/media/books/pdfs/'+file_key)
