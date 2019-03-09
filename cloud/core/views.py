@@ -16,7 +16,7 @@ def signup(request):
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
-            return redirect('home')
+            return redirect('login')
     else:
         form = SignUpForm()
     return render(request, 'registration/signup.html', {
@@ -34,7 +34,7 @@ def upload_book(request):
             candidate.save()
             form.save()
             print (candidate.name)
-            return redirect('home')
+            return redirect('book_list')
     else:
         form = BookForm()
 
